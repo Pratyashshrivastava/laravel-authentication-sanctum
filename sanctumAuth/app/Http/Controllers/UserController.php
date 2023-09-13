@@ -86,4 +86,14 @@ class UserController extends Controller
             'status' => 'success'
         ]);
     }
+
+    public function loggedUser(){
+        // auth()->user()->tokens()->delete();
+        $loggedUser = auth()->user();
+        return response([
+            'user' => $loggedUser,
+            'message' => 'logged user Data',
+            'status' => 'success'
+        ]);
+    }
 }
