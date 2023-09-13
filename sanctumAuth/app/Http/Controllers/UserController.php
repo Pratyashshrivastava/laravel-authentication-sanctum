@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    // Register function Logic
     public function register(Request $request)
     {
         $request->validate([
@@ -47,6 +48,7 @@ class UserController extends Controller
         ]);
     }
 
+    // Login function Logic
     public function login(Request $request)
     {
         $request->validate([
@@ -73,6 +75,15 @@ class UserController extends Controller
             'message' => 'User logged in successfully',
             'status' => 'success',
             // 'user' => $user
+        ]);
+    }
+
+    // Logout function Logic
+    public function logout(){
+        auth()->user()->tokens()->delete();
+        return response([
+            'message' => 'User logged out successfully',
+            'status' => 'success'
         ]);
     }
 }
