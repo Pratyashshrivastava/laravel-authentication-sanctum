@@ -46,4 +46,33 @@ class UserController extends Controller
             // 'user' => $user
         ]);
     }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'email|required',
+            'password' => 'required'
+        ]);
+        
+        $user = User::where('email', $request->email)->first();
+        if(!$user) {
+            return response([
+                'message' => 'User not found',
+                'status' => 'failed'
+            ]);
+        }
+        if(!Hash::check($request->password, $user->password)) {
+            return response([
+                'message' => 'Incorrect password',
+                'status' => 'failed'
+            ]);
+        }
+        $token = $user->createToken($request->email)->plainTextToken;
+        return response([
+            'token' => $token, 
+            'message' => 'User logged in successfully',
+            'status' => 'success',
+            // 'user' => $user
+        ]);
+    }
 }
