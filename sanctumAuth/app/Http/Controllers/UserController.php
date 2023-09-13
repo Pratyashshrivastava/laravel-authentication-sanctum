@@ -96,4 +96,39 @@ class UserController extends Controller
             'status' => 'success'
         ]);
     }
-}
+
+    // public function changePassword(Request $request){
+    //     $request->validate([
+    //         'oldPassword' => 'required',
+    //         'newPassword' => 'required|confirmed'
+    //     ]);
+    //     $user = auth()->user();
+    //     if(!Hash::check($request->oldPassword, $user->password)) {
+    //         return response([
+    //             'message' => 'Incorrect password',
+    //             'status' => 'failed'
+    //         ]);
+    //     }
+    //     $user->password = Hash::make($request->newPassword);
+    //     $user->save();
+    //     return response([
+    //         'message' => 'Password changed successfully',
+    //         'status' => 'success'
+    //     ]);
+    // }
+
+    public function change_password(Request $request){
+        $request->validate ([
+            'password' => 'required|confirmed',
+        ]);
+        $loggedUser = auth()->user();
+        $loggedUser->password = Hash::make($request->password);
+        $loggedUser->save();
+
+        return response([
+            // 'user' => $loggedUser,
+            'message' => 'Password changed successfully',
+            'status' => 'success'
+        ]);
+    }
+} 
