@@ -9,6 +9,7 @@ use App\Http\Controllers\PasswordResetController;
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/send_reset_password_email', [PasswordResetController::class, 'send_reset_password_email']);
+Route::post('/reset/{token}', [PasswordResetController::class, 'reset']);
 
 // Protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
